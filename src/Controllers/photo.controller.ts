@@ -17,12 +17,19 @@ export class PhotoController {
         fileFilter: imageFileFilter,
     }))
     uploadFile(@UploadedFile() file: Express.Multer.File, @Param('id', ParseIntPipe) id: number) {
-        console.log(file);
         return this.photoService.uploadFile(file, id);
     }
 
-    @Post('upload')
-    async upload(@Body() file) {
+    @Post('upload/avatar/:id')
+    @UseInterceptors(FileInterceptor("file", {
+        storage: diskStorage({
+            destination: './storage',
+            filename: editFileName,
+        }),
+        fileFilter: imageFileFilter,
+    }))
+    async upload(@UploadedFile() file: Express.Multer.File, @Param('id', ParseUUIDPipe) id: string) {
+        return this.photoService.uploadAvatarUser(file, id);
     }
 
     @Get(':imgpath')

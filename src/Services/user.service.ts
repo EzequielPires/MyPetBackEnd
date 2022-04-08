@@ -20,7 +20,7 @@ export class UserService {
 
     async findAll() {
         try {
-            const list = await this.userRepository.find({ select: ["id", "name", "phone", "email"] });
+            const list = await this.userRepository.find({ select: ["id", "name", "phone", "email", "photos"] });
             return {
                 success: true,
                 data: list
@@ -55,9 +55,9 @@ export class UserService {
         console.log('email');
         try {
             return await this.userRepository.findOneOrFail(conditions, options);
-          } catch (error) {
+        } catch (error) {
             throw new NotFoundException(error.message);
-          }
+        }
     }
 
     async update(id: string, body: User) {

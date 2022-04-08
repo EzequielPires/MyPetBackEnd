@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Pet } from "./pet.entity";
+import { User } from "./user.entity";
 
 @Entity()
 export class Photo {
@@ -29,4 +30,7 @@ export class Photo {
 
     @ManyToOne(() => Pet, pet => pet.photos, {onDelete: "CASCADE"})
     pet: Pet;
+
+    @ManyToOne(() => User, user => user.photos)
+    user: User;
 }
